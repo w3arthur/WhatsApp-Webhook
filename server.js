@@ -34,8 +34,7 @@ const MessageSchema = new mongoose.Schema({ message: { type: String, index: fals
 const CommentModel = mongoose1.model("Log", MessageSchema); //logs
 
 
-
-console.log('hi');
+console.log('run');
 
 app.route("/test").all(async (req, res) => {
     const data = { message: '~test~' };
