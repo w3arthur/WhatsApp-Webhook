@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 3500;
 //to set on .env        //require("dotenv").config();
 const MY_TOKEN = "arthur"; //token, verify the webhook     //to change
 const ACCESS_TOKEN = "EAAM3hNlK66kBAFpDp46Sm96wRMVdMV2GIjZAcH46weO46U9104jHBD4bjcaJNXjaGSNVzlburD7TKeo7iFqXqTvT83wIVICZCuNu7460KmjX63HwzQzKnvKQX8KIoLUeLZAaP6ykuWHkjFy3WShCaR9AHEb1bPyZBcH4ElZCwykdSGZCpDIEDmfRlhXS1YDhkZCCpCriPjbIwZDZD"; //token, sending the request    //to change
-const mongoDBConnectionString = 'mongodb+srv://legopart:WfHIGKcxMGsllNS4@cluster0.uwlwx.mongodb.net/' + 'webhook';//'mongodb://localhost:27017/' + 'ArthurCam'; //'mongodb+srv://legopart:WfHIGKcxMGsllNS4@cluster0.uwlwx.mongodb.net/' + 'ArthurCam';
+const mongoDBConnectionString = 'mongodb+srv://legopart:WfHIGKcxMGsllNS4@cluster0.uwlwx.mongodb.net/' + 'webhook';
 
 const express = require("express");
 const axios = require("axios");
