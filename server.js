@@ -37,6 +37,8 @@ const CommentModel = mongoose1.model("Log", MessageSchema); //logs
 console.log('hi');
 
 app.route("/test").all(async (req, res) => {
+    const data = { message: '~test~' };
+    await CommentModel(data).save();
     return res.status(200).send('test ok');
 });
 
