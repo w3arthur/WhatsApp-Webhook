@@ -44,7 +44,7 @@ app.route("/test").all(async (req, res) => {
 });
 
 
-app.route("/webhook1")
+app.route("/webhook")
     .get(async (req, res) => {
         const mode = req.query["hub.mode"];
         const challenge = req.query["hub.challenge"];
