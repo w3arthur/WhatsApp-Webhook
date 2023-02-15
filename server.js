@@ -1,7 +1,7 @@
 const PORT = process.env.PORT || 3500;
 //to set on .env        //require("dotenv").config();
 const MY_TOKEN = "arthur"; //token, verify the webhook     //to change
-const ACCESS_TOKEN = ""; //token, sending the request    //to change
+const ACCESS_TOKEN = "EAAM3hNlK66kBAFpDp46Sm96wRMVdMV2GIjZAcH46weO46U9104jHBD4bjcaJNXjaGSNVzlburD7TKeo7iFqXqTvT83wIVICZCuNu7460KmjX63HwzQzKnvKQX8KIoLUeLZAaP6ykuWHkjFy3WShCaR9AHEb1bPyZBcH4ElZCwykdSGZCpDIEDmfRlhXS1YDhkZCCpCriPjbIwZDZD"; //token, sending the request    //to change
 const express = require("express");
 const axios = require("axios");
 
@@ -43,8 +43,8 @@ app.route("/webhook")
                 method: 'POST'
                 , url: 'https://graph.facebook.com/v15.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
                 , headers: {
-                    //Authorization:
-                    'Content-Type': 'application/json'
+                    Authorization: 'Bearer ' + ACCESS_TOKEN
+                    , 'Content-Type': 'application/json'
                 }
                 , data: JSON.stringify({
                     messaging_product: "whatsapp"
