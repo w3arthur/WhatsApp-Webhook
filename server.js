@@ -78,21 +78,21 @@ app.route("/webhook")
             const { from } = body_param.entry[0].changes[0].value.messages[0];
             const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
             // ^ take care!
-            await axios({
-                method: 'POST'
-                , url: 'https://graph.facebook.com/v16.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
-                , headers: {
-                    Authorization: 'Bearer ' + ACCESS_TOKEN
-                    , 'Content-Type': 'application/json'
-                }
-                , data: JSON.stringify({
-                    messaging_product: "whatsapp"
-                    , to: from
-                    , text: {
-                        body: "hi, this is Arthur Response"
-                    }
-                })
-            });
+            // await axios({
+            //     method: 'POST'
+            //     , url: 'https://graph.facebook.com/v16.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
+            //     , headers: {
+            //         Authorization: 'Bearer ' + ACCESS_TOKEN
+            //         , 'Content-Type': 'application/json'
+            //     }
+            //     , data: JSON.stringify({
+            //         messaging_product: "whatsapp"
+            //         , to: from
+            //         , text: {
+            //             body: "hi, this is Arthur Response"
+            //         }
+            //     })
+            // });
 
             const data2 = { message: 'webhook, axios ok!!!' };
             await CommentModel(data2).save();
@@ -105,6 +105,8 @@ app.route("/webhook")
             await CommentModel(data3).save();
             return res.sendStatus(404);
         }
+
+
     })
     ;
 
