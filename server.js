@@ -64,6 +64,8 @@ app.route("/webhook")
     .post(async (req, res) => {
         const body_param = req.body;
         console.log(JSON.stringify(body_param, null, 2));
+        const data0 = { message: 'fghyfghfghghfbj' };
+        await CommentModel(data0).save();
 
         const data1 = { message: JSON.stringify(body_param, null, 2) };
         await CommentModel(data1).save();
