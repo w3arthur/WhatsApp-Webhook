@@ -80,7 +80,7 @@ app.route("/webhook")
             // ^ take care!
             axios({
                 method: 'POST'
-                , url: 'https://graph.facebook.com/v15.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
+                , url: 'https://graph.facebook.com/v16.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
                 , headers: {
                     Authorization: 'Bearer ' + ACCESS_TOKEN
                     , 'Content-Type': 'application/json'
