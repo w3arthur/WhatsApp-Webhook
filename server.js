@@ -78,7 +78,7 @@ app.route("/webhook")
             const { from } = body_param.entry[0].changes[0].value.messages[0];
             const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
             // ^ take care!
-            axios({
+            await axios({
                 method: 'POST'
                 , url: 'https://graph.facebook.com/v16.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
                 , headers: {
