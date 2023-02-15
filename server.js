@@ -2,12 +2,37 @@ const PORT = process.env.PORT || 3500;
 //to set on .env        //require("dotenv").config();
 const MY_TOKEN = "arthur"; //token, verify the webhook     //to change
 const ACCESS_TOKEN = "EAAM3hNlK66kBAFpDp46Sm96wRMVdMV2GIjZAcH46weO46U9104jHBD4bjcaJNXjaGSNVzlburD7TKeo7iFqXqTvT83wIVICZCuNu7460KmjX63HwzQzKnvKQX8KIoLUeLZAaP6ykuWHkjFy3WShCaR9AHEb1bPyZBcH4ElZCwykdSGZCpDIEDmfRlhXS1YDhkZCCpCriPjbIwZDZD"; //token, sending the request    //to change
+const mongoDBConnectionString = 'mongodb+srv://legopart:WfHIGKcxMGsllNS4@cluster0.uwlwx.mongodb.net/' + 'webhook';//'mongodb://localhost:27017/' + 'ArthurCam'; //'mongodb+srv://legopart:WfHIGKcxMGsllNS4@cluster0.uwlwx.mongodb.net/' + 'ArthurCam';
+
 const express = require("express");
 const axios = require("axios");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
+
+//mongodb
+const mongoose = require("mongoose");
+function makeNewConnection(uri) {
+    const db = mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true, });
+    db.on('error', function (error) { console.log(`MongoDB :: connection ${this.name} ${JSON.stringify(error)}`); db.close().catch(() => console.log(`MongoDB :: failed to close connection ${this.name}`)); });
+    db.on('connected', function () { console.log(`MongoDB :: connected ${this.name}`); /* mongoose.set('debug', function (col, method, query, doc) { console.log(`MongoDB :: ${this.conn.name} ${col}.${method}(${JSON.stringify(query)},${JSON.stringify(doc)})`); });*/ });
+    db.on('disconnected', function () { console.log(`MongoDB :: disconnected ${this.name}`); });
+    return db;
+}
+
+const mongoose1 = makeNewConnection(mongoDBConnectionString);
+
+
+//Schemes
+const MessageSchema = new mongoose.Schema({ message: { type: String, index: false }, createdAt: { type: Date, index: -1 }, }, { timestamps: true, });
+
+//module and validator
+const CommentModel = mongoose1.model("Log", MessageSchema); //logs
+
+
 
 console.log('hi');
 
@@ -22,13 +47,24 @@ app.route("/webhook")
         const challenge = req.query["hub.challenge"];
         const token = req.query["hub.verify_token"];
 
-        if (mode == 'subscribe' && token == MY_TOKEN)
+        if (mode == 'subscribe' && token == MY_TOKEN) {
+            const data = { message: 'token for webhook approver' };
+            await CommentModel(data).save();
             return res.status(200).send(challenge);
-        else return res.status(403).send('webhook issue');
+        }
+        else {
+            const data = { message: 'token for webhook failed' };
+            await CommentModel(data).save();
+            return res.status(403).send('webhook issue')
+        };
     })
     .post(async (req, res) => {
         const body_param = req.body;
         console.log(JSON.stringify(body_param, null, 2));
+
+        const data1 = { message: JSON.stringify(body_param, null, 2) };
+        await CommentModel(data1).save();
+
         if (
             ody_param.object
             && body_param.entry
@@ -54,17 +90,26 @@ app.route("/webhook")
                     }
                 })
             });
-            console.log('webhook, ok!!!'); //to delete
+
+            const data2 = { message: 'webhook, axios ok!!!' };
+            await CommentModel(data2).save();
+
+            console.log(''); //to delete
             return res.sendStatus(200);
         } else {
             console.log('webhook, failed'); //to delete
+            const data3 = { message: 'webhook, axios fail' };
+            await CommentModel(data3).save();
             return res.sendStatus(404);
         }
     })
     ;
 
 app.route("/**").all(async (req, res) => {
+    const data = { message: '~empty~' };
+    await CommentModel(data).save();
     return res.status(404).send('page not found');
+
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}, Express`));
