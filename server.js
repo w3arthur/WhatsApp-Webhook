@@ -69,7 +69,7 @@ app.route("/webhook")
         await CommentModel(data1).save();
 
         if (
-            ody_param.object
+            body_param.object
             && body_param.entry
             && body_param.entry[0]?.changes[0]?.value?.messages
             && body_param.entry[0].changes[0].value.messages[0]
