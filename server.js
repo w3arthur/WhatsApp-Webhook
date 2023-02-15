@@ -44,76 +44,76 @@ app.route("/test").all(async (req, res) => {
 });
 
 
-app.route("/webhook")
-    .get(async (req, res) => {
-        const mode = req.query["hub.mode"];
-        const challenge = req.query["hub.challenge"];
-        const token = req.query["hub.verify_token"];
+// app.route("/webhook")
+//     .get(async (req, res) => {
+//         const mode = req.query["hub.mode"];
+//         const challenge = req.query["hub.challenge"];
+//         const token = req.query["hub.verify_token"];
 
-        const data0 = { message: '?????' };
-        await CommentModel(data0).save();
+//         const data0 = { message: '?????' };
+//         await CommentModel(data0).save();
 
-        if (mode == 'subscrib' && token == MY_TOKEN) {
-            const data = { message: 'MY_TOKENMY_TOKENMY_TOKEN' };
-            await CommentModel(data).save();
-            return res.status(200).send(challenge);
-        }
-        else {
-            const data = { message: 'token for webhook failed' };
-            await CommentModel(data).save();
-            return res.status(403).send('webhook issue')
-        };
-    })
-    .post(async (req, res) => {
-        const body_param = req.body;
-        console.log(JSON.stringify(body_param, null, 2));
-        const data0 = { message: 'fghyfghfghghfbj' };
-        await CommentModel(data0).save();
+//         if (mode == 'subscrib' && token == MY_TOKEN) {
+//             const data = { message: 'MY_TOKENMY_TOKENMY_TOKEN' };
+//             await CommentModel(data).save();
+//             return res.status(200).send(challenge);
+//         }
+//         else {
+//             const data = { message: 'token for webhook failed' };
+//             await CommentModel(data).save();
+//             return res.status(403).send('webhook issue')
+//         };
+//     })
+//     .post(async (req, res) => {
+//         const body_param = req.body;
+//         console.log(JSON.stringify(body_param, null, 2));
+//         const data0 = { message: 'fghyfghfghghfbj' };
+//         await CommentModel(data0).save();
 
-        const data1 = { message: JSON.stringify(body_param, null, 2) };
-        await CommentModel(data1).save();
+//         const data1 = { message: JSON.stringify(body_param, null, 2) };
+//         await CommentModel(data1).save();
 
-        if (
-            body_param.object
-            && body_param.entry
-            && body_param.entry[0]?.changes[0]?.value?.messages
-            && body_param.entry[0].changes[0].value.messages[0]
-        ) {
-            const { phone_number_id } = body_param.entry[0].changes[0].value.metadata;
-            const { from } = body_param.entry[0].changes[0].value.messages[0];
-            const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
-            //^ take care!
-            await axios({
-                method: 'POST'
-                , url: 'https://graph.facebook.com/v15.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
-                , headers: {
-                 //   Authorization: 'Bearer ' + ACCESS_TOKEN
-                    /*,*/ 'Content-Type': 'application/json'
-                }
-                , data: JSON.stringify({
-                    messaging_product: "whatsapp"
-                    , to: from
-                    , text: {
-                        body: "hi, this is Arthur Response"
-                    }
-                })
-            });
+//         if (
+//             body_param.object
+//             && body_param.entry
+//             && body_param.entry[0]?.changes[0]?.value?.messages
+//             && body_param.entry[0].changes[0].value.messages[0]
+//         ) {
+//             const { phone_number_id } = body_param.entry[0].changes[0].value.metadata;
+//             const { from } = body_param.entry[0].changes[0].value.messages[0];
+//             const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
+//             //^ take care!
+//             await axios({
+//                 method: 'POST'
+//                 , url: 'https://graph.facebook.com/v15.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
+//                 , headers: {
+//                  //   Authorization: 'Bearer ' + ACCESS_TOKEN
+//                     /*,*/ 'Content-Type': 'application/json'
+//                 }
+//                 , data: JSON.stringify({
+//                     messaging_product: "whatsapp"
+//                     , to: from
+//                     , text: {
+//                         body: "hi, this is Arthur Response"
+//                     }
+//                 })
+//             });
 
-            const data2 = { message: 'webhook, axios ok!!!' };
-            await CommentModel(data2).save();
+//             const data2 = { message: 'webhook, axios ok!!!' };
+//             await CommentModel(data2).save();
 
-            console.log(''); //to delete
-            return res.sendStatus(200);
-        } else {
-            console.log('webhook, failed'); //to delete
-            const data3 = { message: 'webhook, axios fail' };
-            await CommentModel(data3).save();
-            return res.sendStatus(404);
-        }
+//             console.log(''); //to delete
+//             return res.sendStatus(200);
+//         } else {
+//             console.log('webhook, failed'); //to delete
+//             const data3 = { message: 'webhook, axios fail' };
+//             await CommentModel(data3).save();
+//             return res.sendStatus(404);
+//         }
 
 
-    })
-    ;
+//     })
+//     ;
 
 app.route("/**").all(async (req, res) => {
     const data = { message: '~empty~' };
