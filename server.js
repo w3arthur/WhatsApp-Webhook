@@ -53,7 +53,7 @@ app.route("/webhook1")
         const data0 = { message: '?????' };
         await CommentModel(data0).save();
 
-        if (mode == 'subscrib' && token == MY_TOKEN) {
+        if (mode == 'subscribe' && token == MY_TOKEN) {
             const data = { message: 'MY_TOKENMY_TOKENMY_TOKEN' };
             await CommentModel(data).save();
             return res.status(200).send(challenge);
