@@ -50,6 +50,9 @@ app.route("/webhook")
         const challenge = req.query["hub.challenge"];
         const token = req.query["hub.verify_token"];
 
+        const data0 = { message: '?????' };
+        await CommentModel(data0).save();
+
         if (mode == 'subscribe' && token == MY_TOKEN) {
             const data = { message: 'token for webhook approver' };
             await CommentModel(data).save();
