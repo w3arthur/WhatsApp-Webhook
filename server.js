@@ -113,12 +113,12 @@ app.route("/webhook1")
     })
     ;
 
-// app.route("/*").all(async (req, res) => {
-//     const data = { message: '~empty~' };
-//     await CommentModel(data).save();
-//     return res.status(404).send('page not found');
+app.route("/*").all(async (req, res) => {
+    const data = { message: '~empty~' };
+    await CommentModel(data).save();
+    return res.status(404).send('page not found');
 
-// });
+});
 
 
 
