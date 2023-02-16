@@ -108,12 +108,12 @@ app.route("/webhook1")
 
         console.log(''); //to delete
         return res.sendStatus(200);
-    } else {
-        console.log('webhook, failed'); //to delete
-        const data3 = { message: 'webhook, axios fail' };
-        await CommentModel(data3).save();
-        return res.sendStatus(404);
-    }
+    // } else {
+    //     console.log('webhook, failed'); //to delete
+    //     const data3 = { message: 'webhook, axios fail' };
+    //     await CommentModel(data3).save();
+    //     return res.sendStatus(404);
+    // }
 
 
         // }
