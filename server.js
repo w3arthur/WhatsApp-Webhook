@@ -1,4 +1,3 @@
-const PORT = process.env.PORT || 3500;
 //to set on .env        //require("dotenv").config();
 const MY_TOKEN = "arthur"; //token, verify the webhook     //to change
 const ACCESS_TOKEN = "EAAM3hNlK66kBAKYUyyN3LLzUXCwFTFop6kLgNnOFxeBg0lj7PbPYiddemcZC6QRDVWxIsfMAZAAV2SGtWEJL2sLdDqZCN52oRasd9fZB4PJZCLHdTSbhuuq7q8vBiMoEeSy2tZCke8X0NsR9TITEZBfhKyyZAZBf7B9itKm1G1dEujMsBD2WUOmTPckZBlNTdGGxCHX8q32vaySwZDZD";
@@ -114,11 +113,14 @@ app.route("/webhook1")
     })
     ;
 
-// app.route("/**").all(async (req, res) => {
+// app.route("/*").all(async (req, res) => {
 //     const data = { message: '~empty~' };
 //     await CommentModel(data).save();
 //     return res.status(404).send('page not found');
 
 // });
 
+
+
+const PORT = process.env.PORT || 3500;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}, Express`));
