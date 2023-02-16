@@ -73,50 +73,51 @@ app.route("/webhook1")
         await CommentModel(data0).save();
 
 
-        if (
-            //body_param?.object
-            body_param?.entry[0]?.changes[0]?.value?.messages
-            && body_param.entry[0].changes[0].value.messages[0]
-        ) {
-            const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
-            await CommentModel(data2).save();
+        // if (
+        //     //body_param?.object
+        //     body_param?.entry[0]?.changes[0]?.value?.messages
+        //     && body_param.entry[0].changes[0].value.messages[0]
+        // ) {
+        const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
+        await CommentModel(data2).save();
 
 
 
 
-            const { phone_number_id } = body_param.entry[0].changes[0].value.metadata;
-            const { from } = body_param.entry[0].changes[0].value.messages[0];
-            const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
-            //^ take care!
+        const { phone_number_id } = body_param.entry[0].changes[0].value.metadata;
+        const { from } = body_param.entry[0].changes[0].value.messages[0];
+        const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
+        //^ take care!
 
-            await axios({
-                method: 'POST'
-                , url: 'https://graph.facebook.com/v15.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
-                , headers: {
+        await axios({
+            method: 'POST'
+            , url: 'https://graph.facebook.com/v15.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
+            , headers: {
                  //   Authorization: 'Bearer ' + ACCESS_TOKEN
                     /*,*/ 'Content-Type': 'application/json'
+            }
+            , data: JSON.stringify({
+                messaging_product: "whatsapp"
+                , to: from
+                , text: {
+                    body: "hi, this is Arthur Response"
                 }
-                , data: JSON.stringify({
-                    messaging_product: "whatsapp"
-                    , to: from
-                    , text: {
-                        body: "hi, this is Arthur Response"
-                    }
-                })
-            });
+            })
+        });
 
 
-            console.log(''); //to delete
-            return res.sendStatus(200);
-        } else {
-            console.log('webhook, failed'); //to delete
-            const data3 = { message: 'webhook, axios fail' };
-            await CommentModel(data3).save();
-            return res.sendStatus(404);
-        }
+        console.log(''); //to delete
+        return res.sendStatus(200);
+    } else {
+        console.log('webhook, failed'); //to delete
+        const data3 = { message: 'webhook, axios fail' };
+        await CommentModel(data3).save();
+        return res.sendStatus(404);
+    }
 
 
-    })
+        // }
+    )
     ;
 
 app.route("/*").all(async (req, res) => {
