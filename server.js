@@ -72,15 +72,22 @@ app.route("/webhook1")
         await CommentModel(data1).save();
 
         if (
-            body_param.object
+            body_param
             && body_param.entry
             && body_param.entry[0]?.changes[0]?.value?.messages
             && body_param.entry[0].changes[0].value.messages[0]
         ) {
+            const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
+            await CommentModel(data2).save();
+
+
+
+
             const { phone_number_id } = body_param.entry[0].changes[0].value.metadata;
             const { from } = body_param.entry[0].changes[0].value.messages[0];
             const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
             //^ take care!
+
             await axios({
                 method: 'POST'
                 , url: 'https://graph.facebook.com/v15.0/' + phone_number_id + '/messages?access_toke=' + ACCESS_TOKEN //116346754706966
@@ -97,8 +104,6 @@ app.route("/webhook1")
                 })
             });
 
-            const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
-            await CommentModel(data2).save();
 
             console.log(''); //to delete
             return res.sendStatus(200);
