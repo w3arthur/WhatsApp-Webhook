@@ -65,17 +65,16 @@ app.route("/webhook1")
     .post(async (req, res) => {
         const body_param = req.body;
         console.log(JSON.stringify(body_param, null, 2));
-        const data0 = { message: 'fghyfghfghghfbj' };
-        await CommentModel(data0).save();
 
         const data1 = { message: JSON.stringify(body_param, null, 2) };
         await CommentModel(data1).save();
 
+        const data0 = { message: 'is:' + body_param.entry[0].changes[0].value.messages ? 'true' : 'false' };
+        await CommentModel(data0).save();
+
+
         if (
-            body_param
-            && body_param.entry
-            && body_param.entry[0]?.changes[0]?.value?.messages
-            && body_param.entry[0].changes[0].value.messages[0]
+            1
         ) {
             const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
             await CommentModel(data2).save();
