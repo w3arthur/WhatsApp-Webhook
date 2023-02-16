@@ -69,12 +69,14 @@ app.route("/webhook1")
         const data1 = { message: JSON.stringify(body_param, null, 2) };
         await CommentModel(data1).save();
 
-        const data0 = { message: 'is:' + body_param.entry[0].changes[0].value.messages ? 'true' : 'false' };
+        const data0 = { message: 'is:' + body_param.entry[0].changes[0].value.messages[0] ? 'true' : 'false' };
         await CommentModel(data0).save();
 
 
         if (
-            1
+            body_param?.object
+            && body_param?.entry[0]?.changes[0]?.value?.messages
+            && body_param.entry[0].changes[0].value.messages[0]
         ) {
             const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
             await CommentModel(data2).save();
