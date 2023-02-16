@@ -74,8 +74,8 @@ app.route("/webhook1")
 
 
         if (
-            body_param?.object
-            && body_param?.entry[0]?.changes[0]?.value?.messages
+            //body_param?.object
+            body_param?.entry[0]?.changes[0]?.value?.messages
             && body_param.entry[0].changes[0].value.messages[0]
         ) {
             const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
