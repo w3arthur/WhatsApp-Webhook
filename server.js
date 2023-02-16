@@ -78,8 +78,6 @@ app.route("/webhook1")
         //     body_param?.entry[0]?.changes[0]?.value?.messages
         //     && body_param.entry[0].changes[0].value.messages[0]
         // ) {
-        const data2 = { message: 'webhook, axios ok!!! ' + 'phone_number_id (' + phone_number_id + ') ' + 'from (' + from + ')' + 'msg_body (' + msg_body + ')' };
-        await CommentModel(data2).save();
 
 
 
@@ -88,6 +86,11 @@ app.route("/webhook1")
         const { from } = body_param.entry[0].changes[0].value.messages[0];
         const msg_body = body_param.entry[0].changes[0].value.messages[0].text?.body;
         //^ take care!
+
+
+        const data2 = { message: JSON.stringify('webhook, axios ok!!! ' + 'phone_number_id (' + JSON.stringify(phone_number_id) + ') ' + 'from (' + JSON.stringify(from) + ')' + 'msg_body (' + JSON.stringify(msg_body) + ')') };
+        await CommentModel(data2).save();
+
 
         await axios({
             method: 'POST'
